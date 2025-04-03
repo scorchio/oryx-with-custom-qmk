@@ -68,20 +68,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TO(0),          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_LEFT_SHIFT,                                  KC_TRANSPARENT, KC_TRANSPARENT
   ),
+  [6] = LAYOUT_voyager(
+    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
+    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
+    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
+    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
+                                                    TO(0),          KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
+  ),
 };
 
 const uint16_t PROGMEM combo0[] = { HU_SCLN, HU_COLN, COMBO_END};
 const uint16_t PROGMEM combo1[] = { MT(MOD_LSFT, KC_A), MT(MOD_LSFT, KC_T), COMBO_END};
-const uint16_t PROGMEM combo2[] = { MT(MOD_LSFT, KC_A), MT(MOD_LGUI, KC_E), MT(MOD_LSFT, KC_T), MT(MOD_LGUI, KC_S), COMBO_END};
-const uint16_t PROGMEM combo3[] = { HU_II, HU_OEE, COMBO_END};
-const uint16_t PROGMEM combo4[] = { HU_OO, HU_UU, COMBO_END};
+const uint16_t PROGMEM combo2[] = { HU_II, HU_OEE, COMBO_END};
+const uint16_t PROGMEM combo3[] = { HU_OO, HU_UU, COMBO_END};
+const uint16_t PROGMEM combo4[] = { HU_DQOT, HU_UE, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo0, TO(5)),
-    COMBO(combo1, KC_CAPS),
-    COMBO(combo2, CW_TOGG),
-    COMBO(combo3, TO(4)),
-    COMBO(combo4, TO(3)),
+    COMBO(combo1, CW_TOGG),
+    COMBO(combo2, TO(4)),
+    COMBO(combo3, TO(3)),
+    COMBO(combo4, TO(6)),
 };
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -134,6 +141,8 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 
     [5] = { {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255}, {112,222,255} },
 
+    [6] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,255}, {0,218,204}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+
 };
 
 void set_layer_color(int layer) {
@@ -170,6 +179,9 @@ bool rgb_matrix_indicators_user(void) {
       break;
     case 5:
       set_layer_color(5);
+      break;
+    case 6:
+      set_layer_color(6);
       break;
    default:
     if (rgb_matrix_get_flags() == LED_FLAG_NONE)
