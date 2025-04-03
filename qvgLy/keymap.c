@@ -615,3 +615,40 @@ tap_dance_action_t tap_dance_actions[] = {
         [DANCE_9] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_9, dance_9_finished, dance_9_reset),
         [DANCE_10] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_10, dance_10_finished, dance_10_reset),
 };
+
+
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+        // scor: adding the Hungarian letter keycodes
+        case HU_II:
+        case HU_OEE:
+        case HU_OO:
+        case HU_UU:
+        case HU_OE:
+        case HU_AA:
+        // scor: The following two are not needed as they are in KC_A ... KC_Z:
+        // case HU_Z:
+        // case HU_Y:
+        case HU_EE:
+        case HU_UE:
+        case HU_UEE:
+        // scor: using Hungarian minus instead of the English one
+        case HU_MINS:
+            add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        // scor: removed KC_0 from here, as it conflicted with HU_OE
+        case KC_1 ... KC_9:
+        case KC_BSPC:
+        case KC_DEL:
+        // scor: using Hungarian underscore instead of the English one
+        case HU_UNDS:
+            return true;
+
+        default:
+            return false; // Deactivate Caps Word.
+    }
+}
