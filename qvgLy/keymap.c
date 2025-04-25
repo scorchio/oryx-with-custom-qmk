@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_F6,          KC_NO,          HU_Q,           HU_W,           HU_E,           KC_F1,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
     KC_TAB,         KC_LEFT_SHIFT,  HU_A,           HU_S,           HU_D,           HU_I,                                           KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
     KC_ESCAPE,      KC_LEFT_CTRL,   KC_NO,          KC_NO,          HU_F,           HU_R,                                           KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
-                                                    HU_C,           KC_SPACE,                                       KC_F5,          KC_NO
+                                                    HU_C,           KC_SPACE,                                       KC_F5,          KC_F9
   ),
 };
 
