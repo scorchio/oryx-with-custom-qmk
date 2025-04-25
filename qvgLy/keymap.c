@@ -75,6 +75,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
                                                     TO(0),          KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
+  [7] = LAYOUT_voyager(
+    HU_1,           HU_2,           HU_3,           HU_4,           HU_5,           HU_6,                                           KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          TO(0),          
+    KC_F6,          KC_NO,          HU_Q,           HU_W,           HU_E,           KC_F1,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
+    KC_TAB,         KC_LEFT_SHIFT,  HU_A,           HU_S,           HU_D,           HU_I,                                           KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
+    KC_ESCAPE,      KC_LEFT_CTRL,   KC_NO,          KC_NO,          HU_F,           HU_R,                                           KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
+                                                    HU_C,           KC_SPACE,                                       KC_F5,          KC_NO
+  ),
 };
 
 const uint16_t PROGMEM combo0[] = { HU_SCLN, HU_COLN, COMBO_END};
@@ -82,6 +89,7 @@ const uint16_t PROGMEM combo1[] = { MT(MOD_LSFT, KC_A), MT(MOD_LSFT, KC_T), COMB
 const uint16_t PROGMEM combo2[] = { HU_II, HU_OEE, COMBO_END};
 const uint16_t PROGMEM combo3[] = { HU_OO, HU_UU, COMBO_END};
 const uint16_t PROGMEM combo4[] = { HU_DQOT, HU_UE, COMBO_END};
+const uint16_t PROGMEM combo5[] = { HU_EXLM, HU_UEE, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo0, TO(5)),
@@ -89,6 +97,7 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo2, TO(4)),
     COMBO(combo3, TO(3)),
     COMBO(combo4, TO(6)),
+    COMBO(combo5, TO(7)),
 };
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -143,6 +152,8 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 
     [6] = { {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,255}, {0,218,204}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255} },
 
+    [7] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {216,82,255}, {139,255,255}, {34,219,255}, {66,228,255}, {34,219,255}, {193,248,161}, {0,0,0}, {34,219,255}, {66,228,255}, {66,228,255}, {66,228,255}, {193,248,161}, {0,218,204}, {180,241,253}, {0,0,0}, {0,0,0}, {150,255,255}, {127,218,204}, {198,243,255}, {89,255,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,220,246}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {89,255,255}, {23,223,255} },
+
 };
 
 void set_layer_color(int layer) {
@@ -182,6 +193,9 @@ bool rgb_matrix_indicators_user(void) {
       break;
     case 6:
       set_layer_color(6);
+      break;
+    case 7:
+      set_layer_color(7);
       break;
    default:
     if (rgb_matrix_get_flags() == LED_FLAG_NONE)
