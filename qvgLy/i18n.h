@@ -53,11 +53,9 @@
 #define HU_S KC_S
 #define HU_N KC_N
 #define HU_L KC_L
-#define HU_1 KC_1
-#define HU_2 KC_2
-#define HU_5 KC_5
-#define HU_6 KC_6
+#define HU_M KC_M
 #define HU_Q KC_Q
 #define HU_W KC_W
 #define HU_D KC_D
+#define HU_H KC_H
 #define HU_R KC_R
