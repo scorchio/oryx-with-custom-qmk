@@ -31,7 +31,7 @@
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 60
 
 #define CAPS_LOCK_STATUS
-#define SERIAL_NUMBER "qvgLy/QzqvP3"
+#define SERIAL_NUMBER "qvgLy/lbzm4G"
 #define LAYER_STATE_16BIT
 #define COMBO_COUNT 6
 

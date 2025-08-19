@@ -2,25 +2,27 @@
 #include "version.h"
 #include "i18n.h"
 #define MOON_LED_LEVEL LED_LEVEL
-#define ML_SAFE_RANGE SAFE_RANGE
+#ifndef ZSA_SAFE_RANGE
+#define ZSA_SAFE_RANGE SAFE_RANGE
+#endif
 
 enum custom_keycodes {
-  RGB_SLD = ML_SAFE_RANGE,
+  RGB_SLD = ZSA_SAFE_RANGE,
   HSV_35_221_255,
 };
 
 
 
-#define DUAL_FUNC_0 LT(12, KC_F6)
-#define DUAL_FUNC_1 LT(12, KC_P)
-#define DUAL_FUNC_2 LT(9, KC_T)
-#define DUAL_FUNC_3 LT(8, KC_F3)
-#define DUAL_FUNC_4 LT(15, KC_J)
-#define DUAL_FUNC_5 LT(10, KC_F18)
-#define DUAL_FUNC_6 LT(12, KC_S)
-#define DUAL_FUNC_7 LT(9, KC_0)
-#define DUAL_FUNC_8 LT(12, KC_I)
-#define DUAL_FUNC_9 LT(6, KC_O)
+#define DUAL_FUNC_0 LT(8, KC_F)
+#define DUAL_FUNC_1 LT(10, KC_F14)
+#define DUAL_FUNC_2 LT(4, KC_F9)
+#define DUAL_FUNC_3 LT(1, KC_F2)
+#define DUAL_FUNC_4 LT(15, KC_F8)
+#define DUAL_FUNC_5 LT(8, KC_F17)
+#define DUAL_FUNC_6 LT(13, KC_L)
+#define DUAL_FUNC_7 LT(11, KC_A)
+#define DUAL_FUNC_8 LT(12, KC_F3)
+#define DUAL_FUNC_9 LT(9, KC_F1)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
@@ -28,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     HU_OE,          HU_AA,          HU_Z,           KC_C,           HU_Y,           DUAL_FUNC_0,                                    DUAL_FUNC_2,    KC_M,           KC_R,           KC_H,           KC_B,           KC_W,
     KC_TAB,         MT(MOD_LCTL, KC_I),MT(MOD_LALT, KC_O),MT(MOD_LGUI, KC_E),MT(MOD_LSFT, KC_A),DUAL_FUNC_1,                                    DUAL_FUNC_3,    MT(MOD_LSFT, KC_T),MT(MOD_LGUI, KC_S),MT(MOD_LALT, KC_N),MT(MOD_LCTL, KC_L),KC_J,
     KC_ESCAPE,      KC_P,           HU_EE,          KC_U,           KC_D,           HU_LPRN,                                        HU_RPRN,        KC_G,           KC_V,           KC_F,           KC_K,           KC_Q,
-                                                    LT(1, KC_ENTER),MO(2),                                          LT(1, KC_SPACE),LT(2, KC_BSPC)
+                                                    LT(1, KC_ENTER),MO(2),                                          LT(1, KC_SPACE),KC_BSPC
   ),
   [1] = LAYOUT_voyager(
     KC_F1,          KC_F2,          DUAL_FUNC_4,    DUAL_FUNC_5,    KC_F5,          KC_F6,                                          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         KC_F12,
@@ -81,6 +83,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
+  'L', 'L', 'L', 'L', 'L', 'L', 'R', 'R', 'R', 'R', 'R', 'R', 
+  'L', 'L', 'L', 'L', 'L', 'L', 'R', 'R', 'R', 'R', 'R', 'R', 
+  'L', 'L', 'L', 'L', 'L', 'L', 'R', 'R', 'R', 'R', 'R', 'R', 
+  'L', 'L', 'L', 'L', 'L', 'L', 'R', 'R', 'R', 'R', 'R', 'R', 
+  'L', 'L', 'R', 'R'
+);
+
 const uint16_t PROGMEM combo0[] = { HU_SCLN, HU_COLN, COMBO_END};
 const uint16_t PROGMEM combo1[] = { MT(MOD_LSFT, KC_A), MT(MOD_LSFT, KC_T), COMBO_END};
 const uint16_t PROGMEM combo2[] = { HU_II, HU_OEE, COMBO_END};
@@ -109,14 +119,21 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return g_tapping_term + 125;
         case LT(1, KC_SPACE):
             return g_tapping_term -25;
-        case LT(2, KC_BSPC):
+        case KC_BSPC:
             return g_tapping_term + 125;
         default:
             return g_tapping_term;
     }
 }
 
+
 extern rgb_config_t rgb_matrix_config;
+
+RGB hsv_to_rgb_with_value(HSV hsv) {
+  RGB rgb = hsv_to_rgb( hsv );
+  float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+  return (RGB){ f * rgb.r, f * rgb.g, f * rgb.b };
+}
 
 void keyboard_post_init_user(void) {
   rgb_matrix_enable();
@@ -147,9 +164,8 @@ void set_layer_color(int layer) {
     if (!hsv.h && !hsv.s && !hsv.v) {
         rgb_matrix_set_color( i, 0, 0, 0 );
     } else {
-        RGB rgb = hsv_to_rgb( hsv );
-        float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-        rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
+        RGB rgb = hsv_to_rgb_with_value(hsv);
+        rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
     }
   }
 }
@@ -158,7 +174,7 @@ bool rgb_matrix_indicators_user(void) {
   if (rawhid_state.rgb_control) {
       return false;
   }
-  if (keyboard_config.disable_layer_led) { return false; }
+  if (!keyboard_config.disable_layer_led) { 
   switch (biton32(layer_state)) {
     case 1:
       set_layer_color(1);
@@ -179,10 +195,16 @@ bool rgb_matrix_indicators_user(void) {
       set_layer_color(7);
       break;
    default:
-    if (rgb_matrix_get_flags() == LED_FLAG_NONE)
+        if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
       rgb_matrix_set_color_all(0, 0, 0);
-    break;
   }
+    }
+  } else {
+    if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
+      rgb_matrix_set_color_all(0, 0, 0);
+    }
+  }
+
   return true;
 }
 
